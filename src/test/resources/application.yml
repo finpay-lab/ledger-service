@@ -1,0 +1,5 @@
+finpay:
+  outbox:
+    # Integration tests drive the relay explicitly; background scheduling is off
+    # so assertions on Kafka produce verifications stay deterministic.
+    enabled: false
