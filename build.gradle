@@ -16,4 +16,7 @@ jar {
 dependencies {
     implementation libs.spring.boot.starter.web
     implementation libs.common.web
+
+    // Shared architecture-rule checks (ArchUnit) enforced against the domain.
+    testImplementation libs.common.test
 }
