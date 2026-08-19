@@ -1,11 +1,16 @@
 plugins {
+    // Applied INLINE (explicit version) because the platform's
+    // com.finpay.spring-conventions plugin no longer applies it — see the
+    // NOTE in finpay-platform/build-logic (composite-build autoconfig quirk).
+    // Version must match the platform baseline (ADR-0012: Spring Boot 4.1.0)
+    // because the platform's build-logic pins the plugin on the build classpath.
+    id 'org.springframework.boot' version '4.1.0'
     id 'com.finpay.spring-conventions'
     id 'com.finpay.testing-conventions'
 }
 
 description = 'FinPay ledger-service.'
 
-// Services are bootable applications.
 bootJar {
     enabled = true
 }
@@ -15,5 +20,8 @@ jar {
 
 dependencies {
     implementation libs.spring.boot.starter.web
+    implementation libs.spring.kafka
+    implementation libs.spring.boot.starter.actuator
+    implementation libs.micrometer.registry.prometheus
     implementation libs.common.web
 }

@@ -1,5 +1,34 @@
 server:
   port: 8080
+
 spring:
   application:
     name: ledger-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: record
+
+# Anomaly detection consumer wiring (topics from EVENT_CATALOG.md).
+finpay:
+  kafka:
+    consumer:
+      group-id: ledger-anomaly
+    topics:
+      ledger: finpay.ledger
+      transfer: finpay.transfer
+  anomaly:
+    score:
+      # Alert threshold used by the Prometheus publisher + Grafana rule.
+      threshold: 0.5
+
+# Prometheus scrapes /actuator/prometheus (OBSERVABILITY.md).
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
