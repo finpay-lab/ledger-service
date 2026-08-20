@@ -17,6 +17,7 @@ dependencies {
     implementation libs.micrometer.registry.prometheus
     implementation libs.common.web
     implementation libs.common.security
+    implementation libs.common.ai
 }
 
 bootJar {
