@@ -18,3 +18,7 @@ dependencies {
     implementation libs.common.web
     implementation libs.common.security
 }
+
+bootJar {
+    enabled = true
+}

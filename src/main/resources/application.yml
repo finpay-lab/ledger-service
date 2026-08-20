@@ -4,7 +4,7 @@ spring:
   application:
     name: ledger-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/finpay_ledger
+    url: jdbc:postgresql://postgres.finpay-infra.svc.cluster.local:5432/finpay_ledger
     username: finpay
     password: finpay
     driver-class-name: org.postgresql.Driver
@@ -19,7 +19,7 @@ spring:
     locations: classpath:db/migration
     baseline-on-migrate: true
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka.finpay-infra.svc.cluster.local:9092
     consumer:
       group-id: ledger-service
       auto-offset-reset: earliest
