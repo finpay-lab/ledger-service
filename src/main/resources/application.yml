@@ -1,5 +1,47 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   application:
     name: ledger-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finpay_ledger
+    username: finpay
+    password: finpay
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ledger-service
+      auto-offset-reset: earliest
+    producer:
+      transaction-id-prefix: ledger-
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  metrics:
+    tags:
+      service: ledger-service
+
+finpay:
+  ledger:
+    topics:
+      ledger: finpay.ledger
+      transfer: finpay.transfer
+    anomaly:
+      # statistical baseline thresholds
+      amount-zscore: 3.0
+      velocity-window-seconds: 60
+      velocity-max: 50
